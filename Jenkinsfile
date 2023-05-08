@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             steps {
                 git(
-                    url: 'https://github.com/JMontRod/UT4.PC2-G3-Apps.git',
+                    url: 'https://github.com/doggymux/UT4.02.git',
                     credentialsId: 'gitprueba',
                     branch: 'main'
                 )
@@ -16,10 +16,10 @@ pipeline {
                 withSonarQubeEnv('sq1') {
                     echo 'Inside SonarQube environment'
                     sh '/sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
-                        -Dsonar.projectKey=TEST \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=http://172.17.0.2:9000 \
-                        -Dsonar.login=sqp_17b1e31159b43e3416895b7c8532cdc3c5050bad'
+                          -Dsonar.projectKey=jenkins \
+                          -Dsonar.sources=. \
+                          -Dsonar.host.url=http://localhost:9000 \
+                          -Dsonar.token=sqp_90ad91fbf79a4ca0313ee16544e024e6fa8aaedc
                 }
                 echo 'Finished SonarQube analysis'
             }
