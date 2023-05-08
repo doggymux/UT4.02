@@ -13,7 +13,7 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 echo 'Starting SonarQube analysis'
-                withSonarQubeEnv('sq1') {
+                withSonarQubeEnv('jenkins') {
                     echo 'Inside SonarQube environment'
                     sh '/sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
                           -Dsonar.projectKey=jenkins \
