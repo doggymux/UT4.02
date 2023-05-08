@@ -16,10 +16,10 @@ pipeline {
                 withSonarQubeEnv('jenkins') {
                     echo 'Inside SonarQube environment'
                     sh '/sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
-                          -Dsonar.projectKey=jenkins \
-                          -Dsonar.sources=. \
-                          -Dsonar.host.url=http://localhost:9000 \
-                          -Dsonar.token=sqp_90ad91fbf79a4ca0313ee16544e024e6fa8aaedc'
+                            -Dsonar.projectKey=jenkins \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=http://localhost:9000 \
+                            -Dsonar.token=sqp_327484a14c100683cc0a6eaa3b5545a77bcfa2be'
                 }
                 echo 'Finished SonarQube analysis'
             }
