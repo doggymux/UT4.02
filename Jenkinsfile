@@ -18,7 +18,7 @@ pipeline {
                     sh '/sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
                             -Dsonar.projectKey=jenkins \
                             -Dsonar.sources=. \
-                            -Dsonar.host.url=http://172.27.0.3:9000 \
+                            -Dsonar.host.url=http://172.17.0.3:9000 \
                             -Dsonar.token=sqp_decb333a59e814f689d9a3d509e354c41641d715'
                 }
                 echo 'Finished SonarQube analysis'
