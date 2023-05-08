@@ -13,13 +13,13 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 echo 'Starting SonarQube analysis'
-                withSonarQubeEnv('jenkins') {
+                withSonarQubeEnv('sonarqube') {
                     echo 'Inside SonarQube environment'
                     sh '/sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
                             -Dsonar.projectKey=jenkins \
                             -Dsonar.sources=. \
-                            -Dsonar.host.url=http://172.17.0.3:9000 \
-                            -Dsonar.token=sqp_327484a14c100683cc0a6eaa3b5545a77bcfa2be'
+                            -Dsonar.host.url=http://localhost:9000 \
+                            -Dsonar.token=sqp_decb333a59e814f689d9a3d509e354c41641d715'
                 }
                 echo 'Finished SonarQube analysis'
             }
