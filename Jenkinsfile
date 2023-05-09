@@ -25,7 +25,7 @@ pipeline {
                             -Dsonar.projectKey=Angular \
                             -Dsonar.sources=angular \
                             -Dsonar.host.url=http://localhost:9000 \
-                            -Dsonar.token=sqp_c7d7f4d68502747a508c21351ec54edbaab57a77
+                            -Dsonar.token=sqp_c7d7f4d68502747a508c21351ec54edbaab57a77'
                 }
                 echo 'Finished SonarQube analysis'
             }
