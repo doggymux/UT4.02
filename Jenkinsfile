@@ -26,21 +26,21 @@ pipeline {
             }
         }
         
-        stage('Instalar Dependencias') {
+        stage('Instalando el npm') {
             steps {
                 sh 'cd angular/ && npm install --force'
                 slackSend channel: '#tito-jenkins', color: 'good', message: 'niño tenemos npm funcionando'
             }
         }
         
-        stage('Creamos la app') {
+        stage('Buildeando la build v16') {
             steps {
                 sh 'cd /var/lib/jenkins/workspace/PPS/angular && ng build --prod'
-                slackSend channel: '#el-tito-jenkins', color: 'good', message: 'muyayo no te lo vas a creer pero hacemos build'
+                slackSend channel: '#tito-jenkins', color: 'good', message: 'muyayo no te lo vas a creer pero hacemos build'
             }
         }
         
-        stage('Creamos la imagen de Docker') {
+        stage('Levantando docker') {
             steps {
                 sh 'cd /var/lib/jenkins/workspace/PPS/angular && docker build --build-arg DIST=dist/billingApp --build-arg CONFIG_FILE=nginx.conf -t doggy/anguloobstuso .'
                 sh 'cd /var/lib/jenkins/workspace/PPS/java && docker build -t doggy/javasito .' 
