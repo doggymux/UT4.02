@@ -24,12 +24,13 @@ pipeline {
                 }
                 echo 'Finished SonarQube analysis'
             }
-            
-            stage('Despliegue') {
+        }
+        
+        stage('Despliegue') {
             steps {
                 echo 'Desplegando dockers'
-                sh ' cd angular && docker build .'
-                echo 'Se termino el despliegue de angular'
+                sh 'cd angular && docker build .'
+                echo 'Se terminó el despliegue de angular'
             }
         }
     }
