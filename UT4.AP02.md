@@ -151,3 +151,83 @@ Además de esto si accedemos al dashboard de sonarqube veremos aquí reflejado l
 
 ![image-20230513144850366](./assets/UT4.AP02/image-20230513144850366.png)
 
+### Configuración del pipeline
+
+Para configurar el pipeline que usaremos para realizar todas las fases utilizaremos github, dentro de este crearemos un jenkinsfile el cual contendrá todos los comandos necesarios para realizar la ejecución.
+
+```yaml
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                git(
+                    url: 'https://github.com/doggymux/UT4.02.git',
+                    credentialsId: 'github',
+                    branch: 'main'
+                )
+            }
+        }
+        stage('SonarQube analysis') {
+            steps {
+                echo 'Starting SonarQube analysis'
+                withSonarQubeEnv('sonarqube') {
+                    echo 'Inside SonarQube environment'
+                   
+                    sh 'cd angular && /sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
+                            -Dsonar.projectKey=PPS-P4 \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=http://localhost:9000 \
+                            -Dsonar.token=sqp_3640668c241c658c22f64659bf9103f51453d648'
+                }
+                echo 'Finished SonarQube analysis'
+            }
+        }
+        
+        stage('Instalando el npm') {
+            steps {
+                sh 'cd angular/ && npm install --force'
+                slackSend channel: '#tito-jenkins', color: 'good', message: 'niño tenemos npm funcionando'
+            }
+        }
+        
+        stage('Buildeando la build v16') {
+            steps {
+                sh 'cd /var/lib/jenkins/workspace/PPS/angular && ng build --prod'
+                slackSend channel: '#tito-jenkins', color: 'good', message: 'muyayo no te lo vas a creer pero hacemos build'
+            }
+        }
+        
+        stage('Levantando docker') {
+            steps {
+                sh 'cd /var/lib/jenkins/workspace/PPS/angular && docker build --build-arg DIST=dist/billingApp --build-arg CONFIG_FILE=nginx.conf -t doggy/anguloobstuso .'
+                sh 'cd /var/lib/jenkins/workspace/PPS/java && docker build -t doggy/javasito .' 
+                slackSend channel: '#tito-jenkins', color: 'good', message: 'Habemus docker'
+            }
+        }
+    }
+}
+```
+
+Como vemos en el codigo debemos de utilizar npm y ng por lo que necesitaremos instalar node.js en nuestra maquina que esta ejecutando jenkins para poder ejecutarlos. Para ello utilizaremos los siguientes comandos:
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - &&\
+sudo apt-get install -y nodejs
+```
+
+![image-20230513185621350](./../assets/UT4.AP02/image-20230513185621350.png)
+
+Como podemos ver se ha ejecutado correctamente todo el pipeline, ademas nos han llegado las notificaciones a slack de jenkins avisando de la finalización de cada proceso.
+
+![image-20230513191211651](./../assets/UT4.AP02/image-20230513191211651.png)
+
+
+
+## Reflexión sobre artículo
+
+El articulo expone que actualmente uno de los lenguajes con mas vulnerabilidades es C, aunque esto no implique que sea el mas inseguro. Esto se debe al gran despliegue que este lenguaje tiene actualmente y al ser el lenguaje que mas tiempo ha estado en producción de todos los investigados.
+
+Es por ello que podemos pensar que el lenguaje no es mas seguro o menos dependiendo de las vulnerabilidades que estos tengan sino como se use el lenguaje, un buen control de las funciones y estructura del código ayuda a que este sea mas seguro. No es que el lenguaje sea vulnerable es que los programadores lo hacen vulnerable.
+
+En estos últimos años es normal como dice el texto que se detecten muchas mas vulnerabilidades gracias a las herramientas automatizadas de testeo de código que tenemos, y en los próximos años esto ira a mas añadiendo la IA a los testeos permitira detectar vulnerabilidades criticas con aun mas facilidad.
