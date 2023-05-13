@@ -5,7 +5,7 @@ pipeline {
             steps {
                 git(
                     url: 'https://github.com/doggymux/UT4.02.git',
-                    credentialsId: 'gitprueba',
+                    credentialsId: 'github',
                     branch: 'main'
                 )
             }
@@ -15,17 +15,12 @@ pipeline {
                 echo 'Starting SonarQube analysis'
                 withSonarQubeEnv('sonarqube') {
                     echo 'Inside SonarQube environment'
-                    sh '/sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
-                            -Dsonar.projectKey=jenkins \
+                   
+                    sh 'cd angular && sonar-scanner \
+                            -Dsonar.projectKey=PPS-P4 \
                             -Dsonar.sources=. \
-                            -Dsonar.host.url=http://172.17.0.2:9000 \
-                            -Dsonar.token=sqp_decb333a59e814f689d9a3d509e354c41641d715'
-                    
-                    sh 'cd angular && /sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
-                            -Dsonar.projectKey=Angular \
-                            -Dsonar.sources=. \
-                            -Dsonar.host.url=http://172.17.0.2:9000 \
-                            -Dsonar.token=sqp_c7d7f4d68502747a508c21351ec54edbaab57a77'
+                            -Dsonar.host.url=http://localhost:9000 \
+                            -Dsonar.token=sqp_3640668c241c658c22f64659bf9103f51453d648'
                 }
                 echo 'Finished SonarQube analysis'
             }
