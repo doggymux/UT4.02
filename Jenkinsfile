@@ -35,15 +35,15 @@ pipeline {
         
         stage('Creamos la app') {
             steps {
-                sh 'cd angular/angular && ng build --prod'
+                sh 'cd /var/lib/jenkins/workspace/angular/angular && ng build --prod'
                 slackSend channel: '#el-tio-jenkins', color: 'good', message: 'muyayo no te lo vas a creer pero hacemos build'
             }
         }
         
         stage('Creamos la imagen de Docker') {
             steps {
-                sh 'cd angular/angular && docker build --build-arg DIST=dist/billingApp --build-arg CONFIG_FILE=nginx.conf -t doggy/anguloobstuso .'
-                sh 'cd angular/java && docker build -t doggy/javasito .' 
+                sh 'cd /var/lib/jenkins/workspace/angular/angular && docker build --build-arg DIST=dist/billingApp --build-arg CONFIG_FILE=nginx.conf -t doggy/anguloobstuso .'
+                sh 'cd /var/lib/jenkins/workspace/angular/java && docker build -t doggy/javasito .' 
                 slackSend channel: '#el-tio-jenkins', color: 'good', message: 'Habemus docker'
             }
         }
