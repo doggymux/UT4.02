@@ -1,0 +1,6 @@
+version: '3.7'
+services:
+  myapp:
+    image: sunamylol/myapp:latest
+    ports:
+      - 80:80
