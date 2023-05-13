@@ -16,7 +16,7 @@ pipeline {
                 withSonarQubeEnv('sonarqube') {
                     echo 'Inside SonarQube environment'
                    
-                    sh 'cd angular && sonar-scanner \
+                    sh 'cd angular && /sonar-scanner-4.8.0.2856-linux/bin/sonar-scanner \
                             -Dsonar.projectKey=PPS-P4 \
                             -Dsonar.sources=. \
                             -Dsonar.host.url=http://localhost:9000 \
