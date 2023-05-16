@@ -216,11 +216,11 @@ curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - &&\
 sudo apt-get install -y nodejs
 ```
 
-![image-20230513185621350](./../assets/UT4.AP02/image-20230513185621350.png)
+![image-20230513185621350](./assets/UT4.AP02/image-20230513185621350.png)
 
 Como podemos ver se ha ejecutado correctamente todo el pipeline, ademas nos han llegado las notificaciones a slack de jenkins avisando de la finalización de cada proceso.
 
-![image-20230513191211651](./../assets/UT4.AP02/image-20230513191211651.png)
+![image-20230513191211651](./assets/UT4.AP02/image-20230513191211651.png)
 
 
 
